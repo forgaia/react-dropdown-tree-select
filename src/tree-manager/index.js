@@ -5,7 +5,15 @@ import nodeVisitor from './nodeVisitor'
 import keyboardNavigation, { FocusActionNames } from './keyboardNavigation'
 
 class TreeManager {
-  constructor({ data, mode, showPartiallySelected, expandAllAncestors, rootPrefixId, searchPredicate }) {
+  constructor({
+    data,
+    mode,
+    showPartiallySelected,
+    expandAllAncestors,
+    defaultCheckedValues,
+    rootPrefixId,
+    searchPredicate,
+  }) {
     this._src = data
     this.simpleSelect = mode === 'simpleSelect'
     this.radioSelect = mode === 'radioSelect'
@@ -17,6 +25,7 @@ class TreeManager {
       radio: this.radioSelect,
       showPartialState: showPartiallySelected,
       expandAllAncestors,
+      defaultCheckedValues,
       hierarchical: this.hierarchical,
       rootPrefixId,
     })
