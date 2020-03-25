@@ -84,6 +84,14 @@ declare module 'react-dropdown-tree-select' {
      * Simply add desired styles to .node.partial .checkbox-item:indeterminate { ... } in your CSS
      */
     showPartiallySelected?: boolean
+    /**
+     * Expand all Ancestors of the current checked node.
+     */
+    expandAllAncestors?: boolean
+    /**
+     * list of id of checked values
+     */
+    defaultCheckedValues?: string[] | number[]
     /** disabled=true disables the dropdown completely. This is useful during form submit events */
     disabled?: boolean
     /** readOnly=true makes the dropdown read only,

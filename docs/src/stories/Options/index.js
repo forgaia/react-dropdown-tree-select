@@ -128,6 +128,7 @@ class WithOptions extends PureComponent {
           <DropdownTreeSelect
             id="rdts"
             data={data}
+            defaultCheckedValues={['university-of-calcutta']}
             onChange={this.onChange}
             onAction={this.onAction}
             onNodeToggle={this.onNodeToggle}

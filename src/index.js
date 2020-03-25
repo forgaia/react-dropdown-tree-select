@@ -43,6 +43,7 @@ class DropdownTreeSelect extends Component {
     mode: PropTypes.oneOf(['multiSelect', 'simpleSelect', 'radioSelect', 'hierarchical']),
     showPartiallySelected: PropTypes.bool,
     expandAllAncestors: PropTypes.bool,
+    defaultCheckedValues: PropTypes.arrayOf(PropTypes.string),
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
     id: PropTypes.string,
@@ -57,6 +58,7 @@ class DropdownTreeSelect extends Component {
     texts: {},
     showDropdown: 'default',
     inlineSearchInput: false,
+    defaultCheckedValues: [],
   }
 
   constructor(props) {
@@ -68,12 +70,21 @@ class DropdownTreeSelect extends Component {
     this.clientId = props.id || clientIdGenerator.get(this)
   }
 
-  initNewProps = ({ data, mode, showDropdown, showPartiallySelected, expandAllAncestors, searchPredicate }) => {
+  initNewProps = ({
+    data,
+    mode,
+    showDropdown,
+    showPartiallySelected,
+    expandAllAncestors,
+    defaultCheckedValues,
+    searchPredicate,
+  }) => {
     this.treeManager = new TreeManager({
       data,
       mode,
       showPartiallySelected,
       expandAllAncestors,
+      defaultCheckedValues,
       rootPrefixId: this.clientId,
       searchPredicate,
     })
