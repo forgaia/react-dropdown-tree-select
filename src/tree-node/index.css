@@ -1,7 +1,6 @@
 .node {
   list-style: none;
   white-space: nowrap;
-  padding: 4px;
 
   &.leaf {
     &.collapsed {

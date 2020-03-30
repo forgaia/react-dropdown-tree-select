@@ -29,6 +29,7 @@ class DropdownTreeSelect extends Component {
     keepOpenOnSelect: PropTypes.bool,
     texts: PropTypes.shape({
       placeholder: PropTypes.string,
+      searchPlaceholder: PropTypes.string,
       noMatches: PropTypes.string,
       label: PropTypes.string,
       labelRemove: PropTypes.string,
@@ -49,6 +50,10 @@ class DropdownTreeSelect extends Component {
     id: PropTypes.string,
     searchPredicate: PropTypes.func,
     inlineSearchInput: PropTypes.bool,
+    triggerComponent: PropTypes.oneOf([PropTypes.string, PropTypes.elementType]),
+    triggerComponentClassName: PropTypes.string,
+    triggerComponentProps: PropTypes.shape({}),
+    renderTagContent: PropTypes.func,
   }
 
   static defaultProps = {
@@ -59,6 +64,9 @@ class DropdownTreeSelect extends Component {
     showDropdown: 'default',
     inlineSearchInput: false,
     defaultCheckedValues: [],
+    triggerComponent: 'button',
+    triggerComponentClassName: '',
+    triggerComponentProps: {},
   }
 
   constructor(props) {
@@ -298,7 +306,17 @@ class DropdownTreeSelect extends Component {
   }
 
   render() {
-    const { disabled, readOnly, mode, texts, inlineSearchInput } = this.props
+    const {
+      disabled,
+      readOnly,
+      mode,
+      texts,
+      inlineSearchInput,
+      triggerComponent,
+      triggerComponentProps,
+      triggerComponentClassName,
+      renderTagContent,
+    } = this.props
     const { showDropdown, currentFocus, tags } = this.state
 
     const activeDescendant = currentFocus ? `${currentFocus}_li` : undefined
@@ -332,8 +350,16 @@ class DropdownTreeSelect extends Component {
             .filter(Boolean)
             .join(' ')}
         >
-          <Trigger onTrigger={this.onTrigger} showDropdown={showDropdown} {...commonProps} tags={tags}>
-            <Tags tags={tags} onTagRemove={this.onTagRemove} {...commonProps}>
+          <Trigger
+            triggerComponent={triggerComponent}
+            triggerComponentClassName={triggerComponentClassName}
+            triggerComponentProps={triggerComponentProps}
+            onTrigger={this.onTrigger}
+            showDropdown={showDropdown}
+            {...commonProps}
+            tags={tags}
+          >
+            <Tags renderTagContent={renderTagContent} tags={tags} onTagRemove={this.onTagRemove} {...commonProps}>
               {!inlineSearchInput && searchInput}
             </Tags>
           </Trigger>

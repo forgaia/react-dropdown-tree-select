@@ -235,6 +235,23 @@ function walkNodes({
   nodes.forEach((node, i) => {
     node._depth = depth
 
+    if ('undefined' !== typeof node.Id) {
+      node.value = node.Id
+    }
+
+    if ('undefined' !== typeof node.Title) {
+      node.label = node.Title
+    }
+
+    if ('undefined' !== typeof node.IsSelectable) {
+      node.disabled = !node.IsSelectable
+    }
+
+    if (node.Children) {
+      node.children = node.Children
+      delete node.Children
+    }
+
     if (defaultCheckedValues.includes(node.value)) {
       node.checked = true
     }
@@ -255,13 +272,13 @@ function walkNodes({
       }
     }
 
-    if (single && node.isDefaultValue && _rv.singleSelectedNode && !_rv.singleSelectedNode.isDefaultValue) {
+    if (single && node.IsDefault && _rv.singleSelectedNode && !_rv.singleSelectedNode.IsDefault) {
       // Default value has precedence, uncheck previous value
       _rv.singleSelectedNode.checked = false
       _rv.singleSelectedNode = null
     }
 
-    if (node.isDefaultValue && (!single || _rv.defaultValues.length === 0)) {
+    if (node.IsDefault && (!single || _rv.defaultValues.length === 0)) {
       _rv.defaultValues.push(node._id)
       node.checked = true
       if (single) {
@@ -295,7 +312,9 @@ function walkNodes({
         }
       }
       if (expandAllAncestors && !node.checked) {
-        node.expanded = getPartialState(node) || getExpanded(node)
+        if (getPartialState(node) || getExpanded(node)) {
+          node.expanded = true
+        }
 
         // re-check if all children are checked. if so, expand thyself
         if (!isEmpty(node.children) && node.children.every(c => c.checked)) {

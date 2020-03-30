@@ -544,7 +544,7 @@ test('should restore default values', t => {
           id: 'c1',
           label: 'l1c1',
           value: 'l1v1',
-          isDefaultValue: true,
+          IsDefault: true,
         },
       ],
     },
@@ -552,7 +552,7 @@ test('should restore default values', t => {
       id: 'i2',
       label: 'l2',
       value: 'v2',
-      isDefaultValue: true,
+      IsDefault: true,
       children: [
         {
           id: 'c2',

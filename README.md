@@ -273,7 +273,7 @@ Data for rendering the tree select items. The object requires the following stru
   tagClassName,   // optional: Css class for the corresponding tag. Use this to add custom style the pill corresponding to the node.
   actions,        // optional: An array of extra action on the node (such as displaying an info icon or any custom icons/elements)
   dataset,        // optional: Allows data-* attributes to be set on the node and tag elements
-  isDefaultValue, // optional: Indicate if a node is a default value. When true, the dropdown will automatically select the node(s) when there is no other selected node. Can be used on more than one node.
+  IsDefault, // optional: Indicate if a node is a default value. When true, the dropdown will automatically select the node(s) when there is no other selected node. Can be used on more than one node.
   ...             // optional: Any extra properties that you'd like to receive during `onChange` event
 }
 ```
@@ -348,7 +348,7 @@ A multi selectable dropdown which supports tree data **without** parent-child re
 
 Turns the dropdown into a simple, single select dropdown. If you pass tree data, only immediate children are picked, grandchildren nodes are ignored.
 
-⚠️ If multiple nodes in data are selected - by setting either `checked` or `isDefaultValue`, only the first visited node stays selected.
+⚠️ If multiple nodes in data are selected - by setting either `checked` or `IsDefault`, only the first visited node stays selected.
 
 #### radioSelect
 
@@ -356,7 +356,7 @@ Turns the dropdown into radio select dropdown.
 
 Like `simpleSelect`, you can only select one value; but keeps the tree/children structure.
 
-⚠️ If multiple nodes in data are selected - by setting either `checked` or `isDefaultValue`, only the first visited node stays selected.
+⚠️ If multiple nodes in data are selected - by setting either `checked` or `IsDefault`, only the first visited node stays selected.
 
 ### showPartiallySelected
 

@@ -14,7 +14,6 @@ class TreeManager {
     rootPrefixId,
     searchPredicate,
   }) {
-    this._src = data
     this.simpleSelect = mode === 'simpleSelect'
     this.radioSelect = mode === 'radioSelect'
     this.hierarchical = mode === 'hierarchical'

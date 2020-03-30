@@ -210,14 +210,14 @@ test('sets default values', t => {
         {
           name: 'item1-2',
           value: 'value1-2',
-          isDefaultValue: true,
+          IsDefault: true,
         },
       ],
     },
     {
       name: 'item2',
       value: 'value2',
-      isDefaultValue: true,
+      IsDefault: true,
       children: [
         {
           name: 'item2-1',
@@ -255,7 +255,7 @@ test('sets default values', t => {
       name: 'item2',
       value: 'value2',
       checked: true,
-      isDefaultValue: true,
+      IsDefault: true,
     },
     '0-0': {
       _id: '0-0',
@@ -273,7 +273,7 @@ test('sets default values', t => {
       name: 'item1-2',
       value: 'value1-2',
       checked: true,
-      isDefaultValue: true,
+      IsDefault: true,
     },
     '0-0-0': {
       _id: '0-0-0',

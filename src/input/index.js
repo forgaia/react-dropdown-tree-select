@@ -38,7 +38,7 @@ class Input extends PureComponent {
         disabled={disabled}
         ref={inputRef}
         className="search"
-        placeholder={texts.placeholder || 'Choose...'}
+        placeholder={typeof texts.searchPlaceholder !== 'undefined' ? texts.searchPlaceholder : 'Search...'}
         onKeyDown={onKeyDown}
         onChange={this.handleInputChange}
         onFocus={onFocus}

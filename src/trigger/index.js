@@ -14,6 +14,8 @@ class Trigger extends PureComponent {
     texts: PropTypes.object,
     clientId: PropTypes.string,
     tags: PropTypes.array,
+    triggerComponent: PropTypes.oneOf([PropTypes.string, PropTypes.elementType]).isRequired,
+    triggerComponentProps: PropTypes.shape({}).isRequired,
   }
 
   getAriaAttributes = () => {
@@ -33,7 +35,7 @@ class Trigger extends PureComponent {
       labelAttributes = getAriaLabel(texts.label, labelledBy.join(' '))
     }
 
-    const attributes = {
+    return {
       id: triggerId,
       role: 'button',
       tabIndex: 0,
@@ -41,8 +43,6 @@ class Trigger extends PureComponent {
       'aria-expanded': showDropdown ? 'true' : 'false',
       ...labelAttributes,
     }
-
-    return attributes
   }
 
   handleTrigger = e => {
@@ -62,7 +62,14 @@ class Trigger extends PureComponent {
   }
 
   render() {
-    const { disabled, readOnly, showDropdown } = this.props
+    const {
+      disabled,
+      readOnly,
+      showDropdown,
+      triggerComponent,
+      triggerComponentProps,
+      triggerComponentClassName,
+    } = this.props
 
     const dropdownTriggerClassname = [
       'dropdown-trigger',
@@ -71,12 +78,15 @@ class Trigger extends PureComponent {
       readOnly && 'readOnly',
       showDropdown && 'top',
       !showDropdown && 'bottom',
+      triggerComponentClassName,
     ]
       .filter(Boolean)
       .join(' ')
 
+    const Component = triggerComponent
+
     return (
-      <a
+      <Component
         ref={node => {
           this.triggerNode = node
         }}
@@ -84,9 +94,10 @@ class Trigger extends PureComponent {
         onClick={!disabled ? this.handleTrigger : undefined}
         onKeyDown={!disabled ? this.handleTrigger : undefined}
         {...this.getAriaAttributes()}
+        {...triggerComponentProps}
       >
         {this.props.children}
-      </a>
+      </Component>
     )
   }
 }
