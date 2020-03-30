@@ -9,8 +9,8 @@ class TreeManager {
     data,
     mode,
     showPartiallySelected,
-    expandAllAncestors,
-    defaultCheckedValues,
+    expandAllAncestors = [],
+    defaultCheckedValues = false,
     rootPrefixId,
     searchPredicate,
   }) {

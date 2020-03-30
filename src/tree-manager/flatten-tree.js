@@ -180,8 +180,8 @@ function flattenTree({
   simple,
   radio,
   showPartialState,
-  expandAllAncestors,
-  defaultCheckedValues,
+  expandAllAncestors = false,
+  defaultCheckedValues = [],
   hierarchical,
   rootPrefixId,
 }) {
@@ -235,6 +235,9 @@ function walkNodes({
   nodes.forEach((node, i) => {
     node._depth = depth
 
+    /**
+     * Apply Genie Specific Transformations
+     */
     if ('undefined' !== typeof node.Id) {
       node.value = node.Id
     }
@@ -251,8 +254,11 @@ function walkNodes({
       node.children = node.Children
       delete node.Children
     }
+    /**
+     * END: Apply Genie Specific Transformations
+     */
 
-    if (defaultCheckedValues.includes(node.value)) {
+    if (defaultCheckedValues && defaultCheckedValues.includes(node.value)) {
       node.checked = true
     }
 
