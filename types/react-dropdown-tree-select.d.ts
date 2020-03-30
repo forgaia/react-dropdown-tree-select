@@ -67,14 +67,14 @@ declare module 'react-dropdown-tree-select' {
          * - simpleSelect
          * Turns the dropdown into a simple, single select dropdown. If you pass tree data, only immediate children are picked, grandchildren nodes are ignored.
          *
-         * ⚠️ If multiple nodes in data are selected - by setting either `checked` or `isDefaultValue`, only the first visited node stays selected.
+         * ⚠️ If multiple nodes in data are selected - by setting either `checked` or `IsDefault`, only the first visited node stays selected.
          *
          * - radioSelect
          * Turns the dropdown into radio select dropdown.
 
          * Like `simpleSelect`, you can only select one value; but keeps the tree/children structure.
          *
-         * ⚠️ If multiple nodes in data are selected - by setting either `checked` or `isDefaultValue`, only the first visited node stays selected.
+         * ⚠️ If multiple nodes in data are selected - by setting either `checked` or `IsDefault`, only the first visited node stays selected.
          *
          *
          * */
@@ -84,6 +84,14 @@ declare module 'react-dropdown-tree-select' {
      * Simply add desired styles to .node.partial .checkbox-item:indeterminate { ... } in your CSS
      */
     showPartiallySelected?: boolean
+    /**
+     * Expand all Ancestors of the current checked node.
+     */
+    expandAllAncestors?: boolean
+    /**
+     * list of id of checked values
+     */
+    defaultCheckedValues?: string[] | number[]
     /** disabled=true disables the dropdown completely. This is useful during form submit events */
     disabled?: boolean
     /** readOnly=true makes the dropdown read only,
@@ -141,7 +149,7 @@ declare module 'react-dropdown-tree-select' {
      * When true, the dropdown will automatically select the node(s) when there is no other selected node.
      * Can be used on more than one node.
      */
-    isDefaultValue?: boolean
+    IsDefault?: boolean
     /** Any extra properties that you'd like to receive during `onChange` event */
     [property: string]: any
   }

@@ -13,7 +13,7 @@ jobs:
         - yarn install --ignore-engines
       script:
         - yarn lint:nofix
-        - yarn coveralls
+        - yarn test
       branches:
         except:
           - /^v\d+\.\d+\.\d+$/

@@ -8,11 +8,12 @@ export const getTagId = id => `${id}_tag`
 class Tag extends PureComponent {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    tag: PropTypes.shape({}).isRequired,
     onDelete: PropTypes.func,
     readOnly: PropTypes.bool,
     disabled: PropTypes.bool,
     labelRemove: PropTypes.string,
+    renderTagContent: PropTypes.func,
   }
 
   handleClick = e => {
@@ -37,7 +38,7 @@ class Tag extends PureComponent {
   }
 
   render() {
-    const { id, label, labelRemove = 'Remove', readOnly, disabled } = this.props
+    const { id, tag, labelRemove = 'Remove', readOnly, disabled, renderTagContent } = this.props
 
     const tagId = getTagId(id)
     const buttonId = `${id}_button`
@@ -45,21 +46,20 @@ class Tag extends PureComponent {
     const isDisabled = readOnly || disabled
 
     return (
-      <span className="tag" id={tagId} aria-label={label}>
-        {label}
-        <button
+      <span className="tag" id={tagId} aria-label={tag.label}>
+        {renderTagContent ? renderTagContent(tag) : tag.label}
+        <a
           id={buttonId}
           onClick={!isDisabled ? this.handleClick : undefined}
           onKeyDown={!isDisabled ? this.onKeyDown : undefined}
           onKeyUp={!isDisabled ? this.onKeyUp : undefined}
           className={className}
-          type="button"
           aria-label={labelRemove}
           aria-labelledby={`${buttonId} ${tagId}`}
           aria-disabled={isDisabled}
         >
           x
-        </button>
+        </a>
       </span>
     )
   }

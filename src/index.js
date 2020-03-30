@@ -29,6 +29,7 @@ class DropdownTreeSelect extends Component {
     keepOpenOnSelect: PropTypes.bool,
     texts: PropTypes.shape({
       placeholder: PropTypes.string,
+      searchPlaceholder: PropTypes.string,
       noMatches: PropTypes.string,
       label: PropTypes.string,
       labelRemove: PropTypes.string,
@@ -42,11 +43,17 @@ class DropdownTreeSelect extends Component {
     onBlur: PropTypes.func,
     mode: PropTypes.oneOf(['multiSelect', 'simpleSelect', 'radioSelect', 'hierarchical']),
     showPartiallySelected: PropTypes.bool,
+    expandAllAncestors: PropTypes.bool,
+    defaultCheckedValues: PropTypes.arrayOf(PropTypes.string),
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
     id: PropTypes.string,
     searchPredicate: PropTypes.func,
     inlineSearchInput: PropTypes.bool,
+    triggerComponent: PropTypes.oneOf([PropTypes.string, PropTypes.elementType]),
+    triggerComponentClassName: PropTypes.string,
+    triggerComponentProps: PropTypes.shape({}),
+    renderTagContent: PropTypes.func,
   }
 
   static defaultProps = {
@@ -56,6 +63,10 @@ class DropdownTreeSelect extends Component {
     texts: {},
     showDropdown: 'default',
     inlineSearchInput: false,
+    defaultCheckedValues: [],
+    triggerComponent: 'button',
+    triggerComponentClassName: '',
+    triggerComponentProps: {},
   }
 
   constructor(props) {
@@ -67,11 +78,21 @@ class DropdownTreeSelect extends Component {
     this.clientId = props.id || clientIdGenerator.get(this)
   }
 
-  initNewProps = ({ data, mode, showDropdown, showPartiallySelected, searchPredicate }) => {
+  initNewProps = ({
+    data,
+    mode,
+    showDropdown,
+    showPartiallySelected,
+    expandAllAncestors,
+    defaultCheckedValues,
+    searchPredicate,
+  }) => {
     this.treeManager = new TreeManager({
       data,
       mode,
       showPartiallySelected,
+      expandAllAncestors,
+      defaultCheckedValues,
       rootPrefixId: this.clientId,
       searchPredicate,
     })
@@ -173,25 +194,29 @@ class DropdownTreeSelect extends Component {
   }
 
   onCheckboxChange = (id, checked, callback) => {
-    const { mode, keepOpenOnSelect } = this.props
+    const { mode, keepOpenOnSelect, clearSearchOnChange } = this.props
+    const { currentFocus, searchModeOn } = this.state
     this.treeManager.setNodeCheckedState(id, checked)
     let tags = this.treeManager.tags
     const isSingleSelect = ['simpleSelect', 'radioSelect'].indexOf(mode) > -1
     const showDropdown = isSingleSelect && !keepOpenOnSelect ? false : this.state.showDropdown
+    const currentFocusNode = currentFocus && this.treeManager.getNodeById(currentFocus)
+    const node = this.treeManager.getNodeById(id)
 
     if (!tags.length) {
       this.treeManager.restoreDefaultValues()
       tags = this.treeManager.tags
     }
 
-    const tree = this.state.searchModeOn ? this.treeManager.matchTree : this.treeManager.tree
+    const tree = searchModeOn ? this.treeManager.matchTree : this.treeManager.tree
     const nextState = {
       tree,
       tags,
       showDropdown,
+      currentFocus: id,
     }
 
-    if ((isSingleSelect && !showDropdown) || this.props.clearSearchOnChange) {
+    if ((isSingleSelect && !showDropdown) || clearSearchOnChange) {
       Object.assign(nextState, this.resetSearchState())
     }
 
@@ -199,10 +224,11 @@ class DropdownTreeSelect extends Component {
       document.removeEventListener('click', this.handleOutsideClick, false)
     }
 
+    keyboardNavigation.adjustFocusedProps(currentFocusNode, node)
     this.setState(nextState, () => {
       callback && callback(tags)
     })
-    this.props.onChange(this.treeManager.getNodeById(id), tags)
+    this.props.onChange(node, tags)
   }
 
   onAction = (nodeId, action) => {
@@ -280,7 +306,17 @@ class DropdownTreeSelect extends Component {
   }
 
   render() {
-    const { disabled, readOnly, mode, texts, inlineSearchInput } = this.props
+    const {
+      disabled,
+      readOnly,
+      mode,
+      texts,
+      inlineSearchInput,
+      triggerComponent,
+      triggerComponentProps,
+      triggerComponentClassName,
+      renderTagContent,
+    } = this.props
     const { showDropdown, currentFocus, tags } = this.state
 
     const activeDescendant = currentFocus ? `${currentFocus}_li` : undefined
@@ -314,8 +350,16 @@ class DropdownTreeSelect extends Component {
             .filter(Boolean)
             .join(' ')}
         >
-          <Trigger onTrigger={this.onTrigger} showDropdown={showDropdown} {...commonProps} tags={tags}>
-            <Tags tags={tags} onTagRemove={this.onTagRemove} {...commonProps}>
+          <Trigger
+            triggerComponent={triggerComponent}
+            triggerComponentClassName={triggerComponentClassName}
+            triggerComponentProps={triggerComponentProps}
+            onTrigger={this.onTrigger}
+            showDropdown={showDropdown}
+            {...commonProps}
+            tags={tags}
+          >
+            <Tags renderTagContent={renderTagContent} tags={tags} onTagRemove={this.onTagRemove} {...commonProps}>
               {!inlineSearchInput && searchInput}
             </Tags>
           </Trigger>

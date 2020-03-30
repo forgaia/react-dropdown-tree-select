@@ -9,12 +9,8 @@
     display: table;
 
     .dropdown-trigger {
-      padding: 4px;
-      line-height: 20px;
-      max-height: 200px;
       display: inline-block;
       overflow: auto;
-      border: 1px solid rgb(185, 185, 185);
 
       &.arrow {
         cursor: pointer;
@@ -48,13 +44,11 @@
       padding: 4px;
       z-index: 1;
       background: white;
-      border-top: rgba(0, 0, 0, 0.05) 1px solid;
       box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
 
       .search {
         width: 100%;
         border: none;
-        border-bottom: solid 1px #ccc;
         outline: none;
       }
 

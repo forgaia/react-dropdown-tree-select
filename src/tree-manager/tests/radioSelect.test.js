@@ -54,7 +54,7 @@ test('should only select single first checked node on init', t => {
 })
 
 test('should only select single first default value node on init', t => {
-  const data = tree.map(n => ({ ...n, isDefaultValue: true }))
+  const data = tree.map(n => ({ ...n, IsDefault: true }))
 
   const manager = new TreeManager({ data, mode: 'radioSelect' })
 
@@ -64,7 +64,7 @@ test('should only select single first default value node on init', t => {
 })
 
 test('should select single first default node and ignore any checked', t => {
-  const data = [{ id: 'nodeA', checked: true }, { id: 'nodeB', isDefaultValue: true }, { id: 'nodeC', checked: true }]
+  const data = [{ id: 'nodeA', checked: true }, { id: 'nodeB', IsDefault: true }, { id: 'nodeC', checked: true }]
 
   const manager = new TreeManager({ data, mode: 'radioSelect' })
 

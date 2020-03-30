@@ -89,27 +89,17 @@ class TreeNode extends PureComponent {
 
   render() {
     const {
-      mode,
       keepTreeOnSearch,
       _id,
       _children,
       dataset,
       _depth,
       expanded,
-      title,
-      label,
-      partial,
-      checked,
-      value,
-      disabled,
       actions,
       onAction,
       searchModeOn,
       onNodeToggle,
-      onCheckboxChange,
-      showPartiallySelected,
       readOnly,
-      clientId,
     } = this.props
     const liCx = getNodeCx(this.props)
     const style = keepTreeOnSearch || !searchModeOn ? { paddingLeft: `${(_depth || 0) * 20}px` } : {}
@@ -119,20 +109,7 @@ class TreeNode extends PureComponent {
     return (
       <li className={liCx} style={style} id={liId} {...getDataset(dataset)} {...this.getAriaAttributes()}>
         <Toggle isLeaf={isLeaf(_children)} expanded={expanded} id={_id} onNodeToggle={onNodeToggle} />
-        <NodeLabel
-          title={title}
-          label={label}
-          id={_id}
-          partial={partial}
-          checked={checked}
-          value={value}
-          disabled={disabled}
-          mode={mode}
-          onCheckboxChange={onCheckboxChange}
-          showPartiallySelected={showPartiallySelected}
-          readOnly={readOnly}
-          clientId={clientId}
-        />
+        <NodeLabel {...this.props} id={_id} />
         <Actions actions={actions} onAction={onAction} id={_id} readOnly={readOnly} />
       </li>
     )

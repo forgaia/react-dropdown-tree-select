@@ -5,9 +5,9 @@ import { getDataset } from '../utils'
 
 import './index.css'
 
-const getTags = (tags = [], onDelete, readOnly, disabled, labelRemove) =>
+const getTags = (tags = [], onDelete, readOnly, disabled, labelRemove, renderTagContent) =>
   tags.map(tag => {
-    const { _id, label, tagClassName, dataset } = tag
+    const { _id, tagClassName, dataset, ...tagRest } = tag
     return (
       <li
         className={['tag-item', tagClassName].filter(Boolean).join(' ')}
@@ -15,12 +15,13 @@ const getTags = (tags = [], onDelete, readOnly, disabled, labelRemove) =>
         {...getDataset(dataset)}
       >
         <Tag
-          label={label}
+          tag={tagRest}
           id={_id}
           onDelete={onDelete}
           readOnly={readOnly}
-          disabled={disabled}
+          disabled={disabled || tag.disabled}
           labelRemove={labelRemove}
+          renderTagContent={renderTagContent}
         />
       </li>
     )
@@ -37,12 +38,14 @@ class Tags extends PureComponent {
   }
 
   render() {
-    const { tags, onTagRemove, texts = {}, disabled, readOnly, children } = this.props
-    const lastItem = children || <span className="placeholder">{texts.placeholder || 'Choose...'}</span>
+    const { tags, onTagRemove, texts = {}, disabled, readOnly, children, renderTagContent } = this.props
+    const lastItem = children || (
+      <span className="placeholder">{typeof texts.placeholder !== 'undefined' ? texts.placeholder : 'Choose...'}</span>
+    )
 
     return (
       <ul className="tag-list">
-        {getTags(tags, onTagRemove, readOnly, disabled, texts.labelRemove)}
+        {getTags(tags, onTagRemove, readOnly, disabled, texts.labelRemove, renderTagContent)}
         <li className="tag-item">{lastItem}</li>
       </ul>
     )
