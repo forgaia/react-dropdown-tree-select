@@ -31,8 +31,8 @@ const getNodeCx = props => {
 
   return [
     'node',
-    isLeaf(_children) && `leaf leaf-level-${_depth}`,
-    !isLeaf(_children) && `tree tree-level-${_depth}`,
+    isLeaf(_children) && _depth >= 0 && `leaf leaf-level-${_depth}`,
+    !isLeaf(_children) && _depth >= 0 && `tree tree-level-${_depth}`,
     !isLeaf(_children) && (expanded ? 'tree-expanded' : 'tree-collapsed'),
     disabled && 'disabled',
     hide && 'hide',
