@@ -19,6 +19,8 @@ class NodeLabel extends PureComponent {
     onCheckboxChange: PropTypes.func,
     readOnly: PropTypes.bool,
     clientId: PropTypes.string,
+    renderNodeContent: PropTypes.func,
+    nodeWithoutChildren: PropTypes.shape({}),
   }
 
   handleCheckboxChange = e => {
@@ -37,7 +39,7 @@ class NodeLabel extends PureComponent {
   }
 
   render() {
-    const { mode, title, label, id, partial, checked } = this.props
+    const { mode, title, label, id, partial, checked, renderNodeContent, nodeWithoutChildren } = this.props
     const { value, disabled, showPartiallySelected, readOnly, clientId } = this.props
     const nodeLabelProps = { className: 'node-label' }
 
@@ -65,7 +67,7 @@ class NodeLabel extends PureComponent {
             {...sharedProps}
           />
         )}
-        <span {...nodeLabelProps}>{label}</span>
+        <span {...nodeLabelProps}>{renderNodeContent ? renderNodeContent(nodeWithoutChildren) : label}</span>
       </label>
     )
   }

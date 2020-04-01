@@ -33,21 +33,22 @@ class Input extends PureComponent {
     const { inputRef, texts = {}, onFocus, onBlur, disabled, readOnly, onKeyDown, activeDescendant } = this.props
 
     return (
-      <input
-        type="text"
-        disabled={disabled}
-        ref={inputRef}
-        className="search"
-        placeholder={typeof texts.searchPlaceholder !== 'undefined' ? texts.searchPlaceholder : 'Search...'}
-        onKeyDown={onKeyDown}
-        onChange={this.handleInputChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        readOnly={readOnly}
-        aria-activedescendant={activeDescendant}
-        aria-autocomplete={onKeyDown ? 'list' : undefined}
-        {...getAriaLabel(texts.label)}
-      />
+      <div className="search">
+        <input
+          type="text"
+          disabled={disabled}
+          ref={inputRef}
+          placeholder={typeof texts.searchPlaceholder !== 'undefined' ? texts.searchPlaceholder : 'Search...'}
+          onKeyDown={onKeyDown}
+          onChange={this.handleInputChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          readOnly={readOnly}
+          aria-activedescendant={activeDescendant}
+          aria-autocomplete={onKeyDown ? 'list' : undefined}
+          {...getAriaLabel(texts.label)}
+        />
+      </div>
     )
   }
 }

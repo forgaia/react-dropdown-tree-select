@@ -29,6 +29,7 @@ class Tree extends Component {
     readOnly: PropTypes.bool,
     clientId: PropTypes.string,
     activeDescendant: PropTypes.string,
+    renderNodeContent: PropTypes.func,
   }
 
   static defaultProps = {
@@ -88,17 +89,20 @@ class Tree extends Component {
       onCheckboxChange,
       onNodeToggle,
       activeDescendant,
+      renderNodeContent,
       clientId,
     } = props
     const items = []
     data.forEach(node => {
       if (shouldRenderNode(node, searchModeOn, data)) {
+        const { children, Children, ...nodeWithoutChildren } = node
         items.push(
           <TreeNode
             keepTreeOnSearch={keepTreeOnSearch}
             keepChildrenOnSearch={keepChildrenOnSearch}
             key={node._id}
             {...node}
+            nodeWithoutChildren={nodeWithoutChildren}
             searchModeOn={searchModeOn}
             onChange={onChange}
             onCheckboxChange={onCheckboxChange}
@@ -109,6 +113,7 @@ class Tree extends Component {
             readOnly={readOnly}
             clientId={clientId}
             activeDescendant={activeDescendant}
+            renderNodeContent={renderNodeContent}
           />
         )
       }
