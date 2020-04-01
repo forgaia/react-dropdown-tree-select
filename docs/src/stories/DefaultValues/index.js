@@ -4,7 +4,6 @@ import DropdownTreeSelect from '../../../../src'
 import '../../../../dist/styles.css'
 
 import './index.css'
-import './demo.css'
 import data from './data.json'
 
 const onChange = (curNode, selectedNodes) => {
