@@ -18,6 +18,7 @@ import TreeManager from './tree-manager'
 import keyboardNavigation from './tree-manager/keyboardNavigation'
 
 import './index.css'
+
 import { getAriaLabel } from './a11y'
 
 class DropdownTreeSelect extends Component {
@@ -54,6 +55,7 @@ class DropdownTreeSelect extends Component {
     triggerComponentClassName: PropTypes.string,
     triggerComponentProps: PropTypes.shape({}),
     renderTagContent: PropTypes.func,
+    renderNodeContent: PropTypes.func,
   }
 
   static defaultProps = {
@@ -316,6 +318,7 @@ class DropdownTreeSelect extends Component {
       triggerComponentProps,
       triggerComponentClassName,
       renderTagContent,
+      renderNodeContent,
     } = this.props
     const { showDropdown, currentFocus, tags } = this.state
 
@@ -379,6 +382,7 @@ class DropdownTreeSelect extends Component {
                   onNodeToggle={this.onNodeToggle}
                   mode={mode}
                   showPartiallySelected={this.props.showPartiallySelected}
+                  renderNodeContent={renderNodeContent}
                   {...commonProps}
                 />
               )}

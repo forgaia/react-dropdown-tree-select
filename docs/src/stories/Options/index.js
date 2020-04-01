@@ -4,6 +4,7 @@ import Checkbox from './Checkbox'
 import DropdownTreeSelect from '../../../../src'
 
 import './index.css'
+import './demo.css'
 import data from './data.json'
 
 class WithOptions extends PureComponent {

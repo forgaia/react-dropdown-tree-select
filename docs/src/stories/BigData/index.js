@@ -3,6 +3,7 @@ import React from 'react'
 import DropdownTreeSelect from '../../../../src'
 
 import './index.css'
+import './demo.css'
 import bigData from './big-data.json'
 
 const onChange = (curNode, selectedNodes) => {

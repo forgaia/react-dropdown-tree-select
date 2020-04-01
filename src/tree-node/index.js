@@ -15,6 +15,7 @@ const getNodeCx = props => {
     keepTreeOnSearch,
     keepChildrenOnSearch,
     _children,
+    _depth,
     matchInChildren,
     matchInParent,
     disabled,
@@ -24,13 +25,15 @@ const getNodeCx = props => {
     showPartiallySelected,
     readOnly,
     checked,
+    expanded,
     _focused: focused,
   } = props
 
   return [
     'node',
-    isLeaf(_children) && 'leaf',
-    !isLeaf(_children) && 'tree',
+    isLeaf(_children) && `leaf leaf-level-${_depth}`,
+    !isLeaf(_children) && `tree tree-level-${_depth}`,
+    !isLeaf(_children) && (expanded ? 'tree-expanded' : 'tree-collapsed'),
     disabled && 'disabled',
     hide && 'hide',
     keepTreeOnSearch && matchInChildren && 'match-in-children',
@@ -70,6 +73,8 @@ class TreeNode extends PureComponent {
     showPartiallySelected: PropTypes.bool,
     readOnly: PropTypes.bool,
     clientId: PropTypes.string,
+    renderNodeContent: PropTypes.func,
+    nodeWithoutChildren: PropTypes.shape({}),
   }
 
   getAriaAttributes = () => {
@@ -100,6 +105,8 @@ class TreeNode extends PureComponent {
       searchModeOn,
       onNodeToggle,
       readOnly,
+      renderNodeContent,
+      nodeWithoutChildren,
     } = this.props
     const liCx = getNodeCx(this.props)
     const style = keepTreeOnSearch || !searchModeOn ? { paddingLeft: `${(_depth || 0) * 20}px` } : {}
@@ -109,7 +116,12 @@ class TreeNode extends PureComponent {
     return (
       <li className={liCx} style={style} id={liId} {...getDataset(dataset)} {...this.getAriaAttributes()}>
         <Toggle isLeaf={isLeaf(_children)} expanded={expanded} id={_id} onNodeToggle={onNodeToggle} />
-        <NodeLabel {...this.props} id={_id} />
+        <NodeLabel
+          nodeWithoutChildren={nodeWithoutChildren}
+          renderNodeContent={renderNodeContent}
+          {...this.props}
+          id={_id}
+        />
         <Actions actions={actions} onAction={onAction} id={_id} readOnly={readOnly} />
       </li>
     )

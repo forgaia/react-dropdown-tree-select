@@ -1,6 +1,6 @@
 // tslint:disable:interface-name
 declare module 'react-dropdown-tree-select' {
-  import * as React from 'react'
+  import React from 'react'
 
   export type TreeData = Object | TreeNodeProps[]
 
@@ -55,29 +55,29 @@ declare module 'react-dropdown-tree-select' {
      */
     onBlur?: () => void
     /** Defines how the dropdown is rendered / behaves
-         *
-         * - multiSelect
-         * A multi selectable dropdown which supports tree data with parent-child relationships. This is the default mode.
-         *
-         * - hierarchical
-         * A multi selectable dropdown which supports tree data **without** parent-child relationships. In this mode, selecting a node has no ripple effects on its descendants or ancestors. Subsequently, `showPartiallySelected` becomes a moot flag and has no effect as well.
-         *
-         * ⚠️ Note that `hierarchical=true` negates/overrides `showPartiallySelected`.
-         *
-         * - simpleSelect
-         * Turns the dropdown into a simple, single select dropdown. If you pass tree data, only immediate children are picked, grandchildren nodes are ignored.
-         *
-         * ⚠️ If multiple nodes in data are selected - by setting either `checked` or `IsDefault`, only the first visited node stays selected.
-         *
-         * - radioSelect
-         * Turns the dropdown into radio select dropdown.
+       *
+       * - multiSelect
+       * A multi selectable dropdown which supports tree data with parent-child relationships. This is the default mode.
+       *
+       * - hierarchical
+       * A multi selectable dropdown which supports tree data **without** parent-child relationships. In this mode, selecting a node has no ripple effects on its descendants or ancestors. Subsequently, `showPartiallySelected` becomes a moot flag and has no effect as well.
+       *
+       * ⚠️ Note that `hierarchical=true` negates/overrides `showPartiallySelected`.
+       *
+       * - simpleSelect
+       * Turns the dropdown into a simple, single select dropdown. If you pass tree data, only immediate children are picked, grandchildren nodes are ignored.
+       *
+       * ⚠️ If multiple nodes in data are selected - by setting either `checked` or `IsDefault`, only the first visited node stays selected.
+       *
+       * - radioSelect
+       * Turns the dropdown into radio select dropdown.
 
-         * Like `simpleSelect`, you can only select one value; but keeps the tree/children structure.
-         *
-         * ⚠️ If multiple nodes in data are selected - by setting either `checked` or `IsDefault`, only the first visited node stays selected.
-         *
-         *
-         * */
+       * Like `simpleSelect`, you can only select one value; but keeps the tree/children structure.
+       *
+       * ⚠️ If multiple nodes in data are selected - by setting either `checked` or `IsDefault`, only the first visited node stays selected.
+       *
+       *
+       * */
     mode?: Mode
     /** If set to true, shows checkboxes in a partial state when one, but not all of their children are selected.
      * Allows styling of partially selected nodes as well, by using :indeterminate pseudo class.
@@ -107,6 +107,8 @@ declare module 'react-dropdown-tree-select' {
     searchPredicate?: (currentNode: TreeNode, searchTerm: string) => boolean
     /** inlineSearchInput=true Makes the search input renders inside the dropdown-content. Defaults to `false` */
     inlineSearchInput?: boolean
+    renderNodeContent?: (node: TreeNode | any) => React.ElementType
+    renderTagContent?: (node: TreeNode | any) => React.ElementType
   }
 
   export interface DropdownTreeSelectState {
@@ -121,6 +123,7 @@ declare module 'react-dropdown-tree-select' {
     node: HTMLDivElement
     searchInput: HTMLInputElement
     keepDropdownActive: boolean
+
     handleClick(): void
   }
 
@@ -150,6 +153,7 @@ declare module 'react-dropdown-tree-select' {
      * Can be used on more than one node.
      */
     IsDefault?: boolean
+
     /** Any extra properties that you'd like to receive during `onChange` event */
     [property: string]: any
   }
@@ -177,6 +181,7 @@ declare module 'react-dropdown-tree-select' {
     title?: string
     /** Any text to be displayed. This is helpful to pass ligatures if you're using ligature fonts */
     text?: string
+
     /** Any extra properties that you'd like to receive during `onChange` event */
     [property: string]: any
   }
